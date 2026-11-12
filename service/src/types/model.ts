@@ -85,6 +85,12 @@ export interface CabinetType {
 }
 
 
+export interface PartPhysicalUnit {
+  unit: number;
+  role: 'STRUCTURAL_SIDE';
+  side: 'left' | 'right';
+}
+
 export interface Part {
   moduleId: string;
   moduleIndex: number;
@@ -102,6 +108,7 @@ export interface Part {
   grainDirection?: 'vertical' | 'horizontal';
   isHpl?: boolean;
   materialCategory?: 'doors' | 'structure' | 'backs' | 'cover';
+  physicalUnits?: PartPhysicalUnit[];
 }
 
 

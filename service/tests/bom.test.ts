@@ -44,3 +44,64 @@ test('herraje y repisas utilizan la configuración explícita', () => {
   assert.ok(Array.isArray(generateKitchenHardwareList([cabinet], config)));
   assert.equal(typeof getDefaultShelvesCount(cabinet, config.kitchen), 'number');
 });
+
+
+test('identifica ambos laterales estructurales', () => {
+  const parts = generateKitchenPartsList([cabinet], config);
+
+  const structuralSides = parts.filter(
+    part => part.physicalUnits?.some(
+      unit => unit.role === 'STRUCTURAL_SIDE'
+    )
+  );
+
+  assert.equal(structuralSides.length, 1);
+
+  const lateral = structuralSides[0];
+
+  assert.equal(lateral.qty, 2);
+
+  assert.deepEqual(lateral.physicalUnits, [
+    {
+      unit: 1,
+      role: 'STRUCTURAL_SIDE',
+      side: 'left'
+    },
+    {
+      unit: 2,
+      role: 'STRUCTURAL_SIDE',
+      side: 'right'
+    }
+  ]);
+
+  assert.equal(lateral.length, 800);
+  assert.equal(lateral.width, 562);
+  assert.equal(lateral.thickness, 18);
+});
+
+test('conserva cantidades del despiece original', () => {
+  const parts = generateKitchenPartsList([cabinet], config);
+
+  const physicalCount = parts.reduce(
+    (total, part) => total + part.qty,
+    0
+  );
+
+  assert.equal(parts.length, 8);
+  assert.equal(physicalCount, 9);
+
+  for (const part of parts) {
+    if (!part.physicalUnits) continue;
+
+    assert.equal(part.physicalUnits.length, part.qty);
+
+    const units = part.physicalUnits.map(
+      physical => physical.unit
+    );
+
+    assert.equal(
+      new Set(units).size,
+      units.length
+    );
+  }
+});

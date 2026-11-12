@@ -452,6 +452,18 @@ export function generateKitchenPartsList(cabinets: CabinetType[], config: Manufa
       moduleId: cab.id,
       moduleIndex: index,
       qty: 2,
+      physicalUnits: [
+        {
+          unit: 1,
+          role: 'STRUCTURAL_SIDE',
+          side: 'left'
+        },
+        {
+          unit: 2,
+          role: 'STRUCTURAL_SIDE',
+          side: 'right'
+        }
+      ],
       length: cabH * 10,
       width: Number((effectiveDepth * 10).toFixed(1)),
       thickness: thickness * 10,
