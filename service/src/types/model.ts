@@ -85,11 +85,17 @@ export interface CabinetType {
 }
 
 
-export interface PartPhysicalUnit {
-  unit: number;
-  role: 'STRUCTURAL_SIDE';
-  side: 'left' | 'right';
-}
+export type PartPhysicalUnit =
+  | {
+      unit: number;
+      role: 'STRUCTURAL_SIDE';
+      side: 'left' | 'right';
+    }
+  | {
+      unit: number;
+      role: 'DOOR_LEAF';
+      side?: never;
+    };
 
 export interface Part {
   moduleId: string;

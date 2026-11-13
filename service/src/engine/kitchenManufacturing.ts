@@ -1808,6 +1808,9 @@ export function generateKitchenPartsList(cabinets: CabinetType[], config: Manufa
             moduleId: cab.id,
             moduleIndex: index,
             qty: doorLeaves,
+            physicalUnits: cab.variant === '1_door' && doorLeaves === 1
+                ? [{ unit: 1, role: 'DOOR_LEAF' }]
+                : undefined,
             length: Number((rawDoorH * 10).toFixed(1)),
             width: Number(doorW.toFixed(1)),
             thickness: thickness * 10,
